@@ -178,60 +178,129 @@ document.addEventListener('DOMContentLoaded', () => {
 // youtube API with key
 
 {
-    const API_KEY = 'AIzaSyAu_zxi6tYNMZ64ocmNAEb2O8IJY-m1O7w';
-    const CLIENT_ID = '431709912895-o5t0sbjs60ctmr92h8b1f969t3udvbc0.apps.googleusercontent.com';
-    
-    // authorization
+    const API_KEY = 'AIzaSyD2XHgXVelDmgX2YrHdGyaWleukgdxKoWM';
+    const CLIENT_ID = '431709912895-k5k8ua8ij0nqltnfhkvks3stm73gjrom.apps.googleusercontent.com';
+
+    // Authorization
     {
+
         const buttonAuth = document.getElementById('authorize');
-        console.log(buttonAuth);
         const authBlock = document.querySelector('.auth');
 
-        // gapi.load("client:auth2", function() {
-        //     gapi.auth2.init({client_id: CLIENT_ID});
-        // });
-
-        // Promise
-        // .then(() => {}, () => {})
-
-        console.log(window.gapi);
-
-        const authenticate = () => gapi.auth2.getAuthInstance()
+        function authenticate() {
+            return gapi.auth2.getAuthInstance()
                 .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-                .then(() => console.log("Sign-in successful"))
-                .catch(err => console.error("Error signing in", err));
-        
-        const loadClient = () => {
+                .then(function() { console.log("Sign-in successful"); },
+                      function(err) { console.error("Error signing in", err); });
+          }
+          function loadClient() {
             gapi.client.setApiKey(API_KEY);
             return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-                .then(() => console.log("GAPI client loaded for API"))
-                .catch(err => console.error("Error loading GAPI client for API", err));
-        }
-        // Make sure the client is loaded and sign-in is complete before calling this method.
-        function execute() {
+                .then(function() { console.log("GAPI client loaded for API"); },
+                      function(err) { console.error("Error loading GAPI client for API", err); });
+          }
+          function execute() {
             return gapi.client.youtube.channels.list({})
                 .then(function(response) {
-                        // Handle the results here (response.result has the parsed body).
                         console.log("Response", response);
-                        },
-                        function(err) { console.error("Execute error", err); });
-        }
+                      },
+                      function(err) { console.error("Execute error", err); });
+          }
+          gapi.load("client:auth2", function() {
+            gapi.auth2.init({client_id: CLIENT_ID});
+          });
 
-        gapi.load("client:auth2", () => gapi.auth2.init({client_id: CLIENT_ID}));
-      
+          buttonAuth.addEventListener('click', () => {
+            authenticate().then(loadClient)
+          })
+    }
 
-    
-        console.log(buttonAuth);
-        buttonAuth.addEventListener('click', () => {
-            console.log('dad')
-        authenticate().then(loadClient)
-        })
+    // Request
+    {
 
     }
 
-    // request
-
 }
+
+
+
+
+
+
+// https://developers.google.com/youtube/v3/quickstart/js#step_1_set_up_your_project_and_credentials
+
+// https://console.developers.google.com/apis/credentials?highlightClient=431709912895-aafp4nc4st71959f0vu0lu3vkp8eidpn.apps.googleusercontent.com&project=vital-reef-250016&folder&organizationId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// {
+//     const API_KEY = 'AIzaSyAu_zxi6tYNMZ64ocmNAEb2O8IJY-m1O7w';
+//     const CLIENT_ID = '431709912895-o5t0sbjs60ctmr92h8b1f969t3udvbc0.apps.googleusercontent.com';
+    
+//     // authorization
+//     {
+//         const buttonAuth = document.getElementById('authorize');
+//         console.log(buttonAuth);
+//         const authBlock = document.querySelector('.auth');
+
+//         // gapi.load("client:auth2", function() {
+//         //     gapi.auth2.init({client_id: CLIENT_ID});
+//         // });
+
+//         // Promise
+//         // .then(() => {}, () => {})
+
+//         console.log(window.gapi);
+
+//         const authenticate = () => gapi.auth2.getAuthInstance()
+//                 .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+//                 .then(() => console.log("Sign-in successful"))
+//                 .catch(err => console.error("Error signing in", err));
+        
+//         const loadClient = () => {
+//             gapi.client.setApiKey(API_KEY);
+//             return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+//                 .then(() => console.log("GAPI client loaded for API"))
+//                 .catch(err => console.error("Error loading GAPI client for API", err));
+//         }
+//         // Make sure the client is loaded and sign-in is complete before calling this method.
+//         function execute() {
+//             return gapi.client.youtube.channels.list({})
+//                 .then(function(response) {
+//                         // Handle the results here (response.result has the parsed body).
+//                         console.log("Response", response);
+//                         },
+//                         function(err) { console.error("Execute error", err); });
+//         }
+
+//         gapi.load("client:auth2", () => gapi.auth2.init({client_id: CLIENT_ID}));
+      
+
+    
+//         console.log(buttonAuth);
+//         buttonAuth.addEventListener('click', () => {
+//             console.log('dad')
+//         authenticate().then(loadClient)
+//         })
+
+//     }
+
+//     // request
+
+// }
 
 
 });
